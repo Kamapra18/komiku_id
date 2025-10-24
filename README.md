@@ -68,7 +68,7 @@ Contoh struktur penempatan gambar:
 
 ---
 
-## 🏗️ Struktur Folder Proyek
+## Struktur Folder Proyek
 
 ```
 
@@ -87,7 +87,7 @@ shopping-list-app/
 
 ---
 
-## 📄 Penjelasan Tiap Halaman
+## Penjelasan Tiap Halaman
 
 ### 1️⃣ `HomeScreen` (`index.tsx`)
 
@@ -161,7 +161,7 @@ shopping-list-app/
 
 ---
 
-## 🧠 Teknologi yang Digunakan
+## Teknologi yang Digunakan
 
 | Teknologi                 | Fungsi                                      |
 | ------------------------- | ------------------------------------------- |
@@ -174,7 +174,7 @@ shopping-list-app/
 
 ---
 
-## 🧪 Alur Penggunaan Aplikasi
+## Alur Penggunaan Aplikasi
 
 1. Buka aplikasi → halaman utama menampilkan daftar komik.
 2. Tekan tombol “+” untuk menambah komik baru.
@@ -185,7 +185,7 @@ shopping-list-app/
 
 ---
 
-## 💾 Catatan Tambahan
+## Catatan Tambahan
 
 - Data komik disimpan secara lokal (belum tersambung ke backend).
 - Aplikasi dirancang dengan gaya sederhana dan user-friendly.
@@ -193,11 +193,12 @@ shopping-list-app/
 
 ---
 
-### ✍️ Pengembang
+### Pengembang
 
-**Nama:** [Isi Nama Kamu]
-**NIM:** [Isi NIM Kamu]
+**Nama:** I Kadek Mario Prayoga
+**NIM:** 2301020018
 **Mata Kuliah:** Pemrograman Mobile
-**Dosen Pengampu:** [Isi Nama Dosen]
+**Dosen Pengampu:** 
+IDA BAGUS KRESNA SUDIATMIKA
 
 - ```
