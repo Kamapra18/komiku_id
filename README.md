@@ -1,10 +1,7 @@
+- ```markdown
+# Aplikasi Koleksi Komik Pribadi
 
----
-
-```markdown
-# 📘 Aplikasi Koleksi Komik Pribadi
-
-## 🧩 Deskripsi Singkat
+## Deskripsi Singkat
 
 Aplikasi ini merupakan proyek **UTS Mata Kuliah Pemrograman Mobile**, dibangun menggunakan **Expo (React Native)** dan **Zustand** untuk manajemen state.  
 Tujuannya adalah memudahkan pengguna dalam **mencatat, mengelola, dan memantau koleksi komik pribadi**, termasuk status apakah komik sedang **dipinjam orang lain** atau **tersedia**.
@@ -13,7 +10,7 @@ Aplikasi ini menyimpan data secara lokal menggunakan **AsyncStorage**, sehingga 
 
 ---
 
-## ⚙️ Fitur Utama
+## Fitur Utama
 
 1. **Tambah Komik Baru**
 
@@ -50,10 +47,8 @@ Aplikasi ini menyimpan data secara lokal menggunakan **AsyncStorage**, sehingga 
 
 ---
 
-## 📱 Demo Aplikasi
+## Demo Aplikasi
 
-> Tambahkan screenshot atau rekaman layar di bawah ini untuk dokumentasi hasil akhir:
->
 > - Tampilan daftar komik
 > - Tampilan form tambah komik
 > - Tampilan halaman detail/edit komik
@@ -109,7 +104,8 @@ shopping-list-app/
 
 **Screenshot Contoh:**
 
-> _Letakkan di sini screenshot daftar komik dengan tombol tambah di pojok kanan bawah._
+> _<img width="447" height="997" alt="image" src="https://github.com/user-attachments/assets/6868c6e5-afa7-47ae-abad-af3fd50ea1c2" />
+
 
 ---
 
@@ -204,7 +200,4 @@ shopping-list-app/
 **Mata Kuliah:** Pemrograman Mobile
 **Dosen Pengampu:** [Isi Nama Dosen]
 
-```
-
----
-```
+- ```
