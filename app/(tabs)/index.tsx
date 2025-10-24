@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import {
   Alert,
   FlatList,
@@ -10,11 +10,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import AddKomikModal from "../../components/add";
 import { useKomikStore } from "../../store/useKomikStore";
 
 export default function HomeScreen() {
   const router = useRouter();
   const { komiks, toggleStatus, removeKomik } = useKomikStore();
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedKomik, setSelectedKomik] = useState<any | null>(null);
+
   const handleDelete = (id: string, judul: string) => {
     Alert.alert(
       "Konfirmasi Hapus",
@@ -30,6 +35,16 @@ export default function HomeScreen() {
     );
   };
 
+  const handleEdit = (komik: any) => {
+    setSelectedKomik(komik);
+    setModalVisible(true);
+  };
+
+  const handleAdd = () => {
+    setSelectedKomik(null);
+    setModalVisible(true);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Koleksi Komik</Text>
@@ -40,10 +55,11 @@ export default function HomeScreen() {
         renderItem={({ item }) => (
           <Pressable
             style={styles.card}
-            onPress={() => router.push(`/detail/${item.id}`)}>
+            onPress={() => router.push(`/detail/${item.id}`)} // 👈 navigasi ke halaman detail
+          >
             <View style={{ flex: 1 }}>
               <Text style={styles.name}>{item.judul}</Text>
-              <Text style={styles.info}>Volume: {item.volume}</Text>
+              <Text style={styles.info}>Tipe: {item.type_komik}</Text>
               <Text style={styles.status}>
                 Status:{" "}
                 <Text
@@ -64,6 +80,10 @@ export default function HomeScreen() {
                 )}
               </TouchableOpacity>
 
+              <TouchableOpacity onPress={() => handleEdit(item)}>
+                <Ionicons name="create" size={26} color="#f39c12" />
+              </TouchableOpacity>
+
               <TouchableOpacity
                 onPress={() => handleDelete(item.id, item.judul)}>
                 <Ionicons name="close-circle" size={28} color="#e74c3c" />
@@ -78,10 +98,16 @@ export default function HomeScreen() {
 
       <TouchableOpacity
         style={styles.fab}
-        onPress={() => router.push("/add")}
+        onPress={handleAdd}
         activeOpacity={0.7}>
         <Ionicons name="add" size={28} color="#fff" />
       </TouchableOpacity>
+
+      <AddKomikModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        editData={selectedKomik}
+      />
     </View>
   );
 }

@@ -1,71 +1,109 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useState } from "react";
-import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
+import React from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useKomikStore } from "../../../store/useKomikStore";
 
 export default function DetailKomik() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
-  const { komiks, updateKomik } = useKomikStore();
+  const { komiks } = useKomikStore();
 
   const komik = komiks.find((k) => k.id === id);
 
-  const [judul, setJudul] = useState(komik?.judul || "");
-  const [deskripsi, setDeskripsi] = useState(komik?.deskripsi || "");
-  const [volume, setVolume] = useState(komik?.volume || "");
-
-  if (!komik) return <Text>Komik tidak ditemukan.</Text>;
-
-  const handleUpdate = () => {
-    if (!judul.trim() || !volume.trim()) {
-      Alert.alert("Peringatan", "Judul dan Volume wajib diisi.");
-      return;
-    }
-
-    updateKomik(id as string, {
-      judul,
-      deskripsi,
-      volume,
-    });
-
-    Alert.alert("Berhasil", "Data komik berhasil diperbarui.");
-    router.back();
-  };
+  if (!komik) {
+    return (
+      <View style={styles.center}>
+        <Text style={styles.notFound}>Komik tidak ditemukan.</Text>
+      </View>
+    );
+  }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Edit Komik</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.infoCard}>
+        <Text style={styles.title}>{komik.judul}</Text>
+        <Text style={styles.value}>Deskripsi: {komik.deskripsi}</Text>
 
-      <Text>Judul:</Text>
-      <TextInput value={judul} onChangeText={setJudul} style={styles.input} />
+        <Text style={styles.value}>Volume: {komik.volume || "-"}</Text>
 
-      <Text>Deskripsi:</Text>
-      <TextInput
-        value={deskripsi}
-        onChangeText={setDeskripsi}
-        style={styles.input}
-      />
+        <Text style={styles.value}>Penulis: {komik.penulis || "-"}</Text>
 
-      <Text>Volume:</Text>
-      <TextInput
-        value={volume}
-        onChangeText={setVolume}
-        keyboardType="numeric"
-        style={styles.input}
-      />
+        <Text style={styles.value}>Genre: {komik.genre || "-"}</Text>
 
-      <Button title="Simpan Perubahan" onPress={handleUpdate} />
-    </View>
+        <Text style={styles.value}>Tipe Komik: {komik.type_komik}</Text>
+
+        <Text style={styles.label}>Status:</Text>
+        <Text
+          style={[
+            styles.value,
+            {
+              color: komik.status === "Tersedia" ? "#2ecc71" : "#f39c12",
+              fontWeight: "bold",
+            },
+          ]}>
+          {komik.status}
+        </Text>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  title: { fontSize: 22, fontWeight: "bold", marginBottom: 10 },
-  input: {
-    borderWidth: 1,
-    padding: 8,
-    marginBottom: 12,
-    borderRadius: 6,
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#f9f9f9",
+    flexGrow: 1,
+  },
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f9f9f9",
+  },
+  notFound: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#149cac",
+    marginBottom: 16,
+    textAlign: "center",
+  },
+  infoCard: {
+    flex: 1,
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 16,
+  },
+  label: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#333",
+    marginTop: 10,
+  },
+  value: {
+    fontSize: 15,
+    color: "#555",
+  },
+  backButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "flex-start",
+    backgroundColor: "#149cac",
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  backText: {
+    color: "#fff",
+    marginLeft: 6,
+    fontWeight: "bold",
   },
 });
