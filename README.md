@@ -67,16 +67,27 @@ Aplikasi ini menyimpan data secara lokal menggunakan **AsyncStorage**, sehingga 
 ## Demo Aplikasi
 
 > - Tampilan daftar komik
+
 <img width="492" height="1085" alt="image" src="https://github.com/user-attachments/assets/69c37760-f28c-4447-ad7b-8b2b034c9728" />
+
 > - Tampilan form tambah komik
+
 <img width="493" height="1069" alt="image" src="https://github.com/user-attachments/assets/47d47144-996c-435a-a022-41bbf9a6f4dc" />
+
 > - Tampilan form edit komik
+
 <img width="486" height="1071" alt="image" src="https://github.com/user-attachments/assets/90f29dea-6b9e-41da-96ec-9fcde9a9afb7" />
+
 > - Dialog hapus data
+
 <img width="468" height="235" alt="image" src="https://github.com/user-attachments/assets/26f6630c-fb1d-4c22-81fe-bbe87f306955" />
+
 > - Tampilan Halaman Detail Komik
+
 <img width="491" height="1080" alt="image" src="https://github.com/user-attachments/assets/22908da8-1669-4d6c-81b9-bf4a4c16d001" />
+
 > - Ubah status komik
+
 <img width="484" height="328" alt="image" src="https://github.com/user-attachments/assets/25a53a4e-90d8-4b6f-800b-8338e6714ac9" />
 
 ---
