@@ -1,6 +1,13 @@
 - ```markdown
 # Aplikasi Koleksi Komik Pribadi
 
+### Pengembang
+
+**Nama:** I Kadek Mario Prayoga
+**NIM:** 2301020018
+**Mata Kuliah:** Pemrograman Mobile
+**Dosen Pengampu:** IDA BAGUS KRESNA SUDIATMIKA
+
 ## Deskripsi Singkat
 
 Aplikasi ini merupakan proyek **UTS Mata Kuliah Pemrograman Mobile**, dibangun menggunakan **Expo (React Native)** dan **Zustand** untuk manajemen state.  
@@ -16,23 +23,33 @@ Aplikasi ini menyimpan data secara lokal menggunakan **AsyncStorage**, sehingga 
 
    - Pengguna dapat menambahkan komik dengan data:
      - Judul
-     - Deskripsi singkat
+     - Deskripsi
      - Volume
-     - Status otomatis: “Tersedia”
+     - Penulis
+     - Genre
+     - Tipe Komik
+     - Status otomatis: **"Tersedia"**
    - Form ditampilkan dalam modal sederhana agar proses cepat dan mudah.
 
 2. **Daftar Komik**
 
    - Menampilkan semua komik dalam bentuk kartu (FlatList).
-   - Setiap item menampilkan: **Judul**, **Volume**, dan **Status**.
+   - Setiap item menampilkan: **Judul**, **Tipe**, dan **Status**.
    - Warna status membantu identifikasi cepat:
-     - Hijau → Tersedia
-     - Oranye → Dipinjam
+     - Hijau --> Tersedia
+     - kuning --> Edit 
+     - Oranye --> Dipinjam
 
 3. **Edit Komik (Halaman Detail)**
 
    - Menampilkan detail komik yang dipilih.
-   - Dapat mengubah judul, deskripsi, volume, atau status.
+   - Dapat mengubah
+        - Judul
+        - Deskripsi
+        - Volume
+        - Penulis
+        - Genre
+        - Tipe Komik
    - Tersedia tombol **Simpan Perubahan**.
 
 4. **Ubah Status**
@@ -50,21 +67,17 @@ Aplikasi ini menyimpan data secara lokal menggunakan **AsyncStorage**, sehingga 
 ## Demo Aplikasi
 
 > - Tampilan daftar komik
+<img width="492" height="1085" alt="image" src="https://github.com/user-attachments/assets/69c37760-f28c-4447-ad7b-8b2b034c9728" />
 > - Tampilan form tambah komik
-> - Tampilan halaman detail/edit komik
+<img width="493" height="1069" alt="image" src="https://github.com/user-attachments/assets/47d47144-996c-435a-a022-41bbf9a6f4dc" />
+> - Tampilan form edit komik
+<img width="486" height="1071" alt="image" src="https://github.com/user-attachments/assets/90f29dea-6b9e-41da-96ec-9fcde9a9afb7" />
 > - Dialog hapus data
+<img width="468" height="235" alt="image" src="https://github.com/user-attachments/assets/26f6630c-fb1d-4c22-81fe-bbe87f306955" />
+> - Tampilan Halaman Detail Komik
+<img width="491" height="1080" alt="image" src="https://github.com/user-attachments/assets/22908da8-1669-4d6c-81b9-bf4a4c16d001" />
 > - Ubah status komik
-
-Contoh struktur penempatan gambar:
-
-```
-
-![Home Screen](assets/screenshots/home.png)
-![Tambah Komik](assets/screenshots/add.png)
-![Detail Komik](assets/screenshots/detail.png)
-![Dialog Hapus](assets/screenshots/delete.png)
-
-```
+<img width="484" height="328" alt="image" src="https://github.com/user-attachments/assets/25a53a4e-90d8-4b6f-800b-8338e6714ac9" />
 
 ---
 
@@ -72,92 +85,18 @@ Contoh struktur penempatan gambar:
 
 ```
 
-shopping-list-app/
+komiku_id/
 ├── app/
-│ ├── \_layout.tsx
+│ ├── _layout.tsx
 │ ├── index.tsx → Halaman utama (daftar komik)
-│ ├── add.tsx → Modal atau halaman tambah komik
-│ └── detail/
-│ └── [id].tsx → Halaman detail & edit komik
+│ ├── detail/
+│ │ ├── [id].tsx → Halaman detail komik
+│ │ └── _layout.tsx
+├── components/
+│ └── add.tsx → Modal tambah / edit komik
 ├── store/
-│ └── useKomikStore.ts → Manajemen state dengan Zustand
-└── assets/ → (opsional) ikon, gambar, dsb.
-
-```
-
----
-
-## Penjelasan Tiap Halaman
-
-### 1️⃣ `HomeScreen` (`index.tsx`)
-
-**Fungsi:**
-
-- Menampilkan seluruh koleksi komik.
-- Memberikan akses untuk menambah, menghapus, dan ubah status komik.
-
-**Komponen penting:**
-
-- `FlatList` untuk menampilkan daftar komik.
-- `TouchableOpacity` untuk tombol **Tambah (+)** di pojok kanan bawah.
-- `Alert.alert()` untuk konfirmasi sebelum menghapus.
-
-**Screenshot Contoh:**
-
-> _<img width="447" height="997" alt="image" src="https://github.com/user-attachments/assets/6868c6e5-afa7-47ae-abad-af3fd50ea1c2" />
-
-
----
-
-### 2️⃣ `AddKomik` (`add.tsx` atau ModalForm)
-
-**Fungsi:**
-
-- Menambahkan komik baru ke daftar.
-- Input berisi: judul, deskripsi, volume.
-
-**Proses:**
-
-- Validasi: judul dan volume wajib diisi.
-- Data disimpan ke store Zustand dan AsyncStorage.
-
-**Screenshot Contoh:**
-
-> _Letakkan screenshot tampilan form tambah komik._
-
----
-
-### 3️⃣ `DetailKomik` (`detail/[id].tsx`)
-
-**Fungsi:**
-
-- Menampilkan detail lengkap komik.
-- Menyediakan form edit untuk mengubah data (judul, volume, deskripsi, status).
-
-**Proses:**
-
-- Data diambil berdasarkan `id` dari URL.
-- Setelah diubah, data diperbarui di Zustand store.
-
-**Screenshot Contoh:**
-
-> _Letakkan screenshot tampilan halaman edit komik._
-
----
-
-### 4️⃣ `useKomikStore.ts`
-
-**Fungsi:**
-
-- Menyimpan seluruh data komik dan mengelola fungsinya (CRUD).
-- Menggunakan **Zustand** agar manajemen state tetap ringan dan reaktif.
-
-**Method:**
-
-- `addKomik()` → Menambahkan data baru.
-- `removeKomik()` → Menghapus komik berdasarkan ID.
-- `toggleStatus()` → Mengubah status komik (Tersedia ↔ Dipinjam).
-- `updateKomik()` → Mengedit data komik tertentu.
+│ └── useKomikStore.ts → Manajemen state (Zustand)
+├── assets/dsb.
 
 ---
 
@@ -172,33 +111,5 @@ shopping-list-app/
 | **Expo Router**           | Navigasi berbasis file routing              |
 | **Ionicons**              | Ikon bawaan dari Expo                       |
 
----
-
-## Alur Penggunaan Aplikasi
-
-1. Buka aplikasi → halaman utama menampilkan daftar komik.
-2. Tekan tombol “+” untuk menambah komik baru.
-3. Setelah disimpan, komik akan muncul di daftar utama.
-4. Tekan ikon **radio/check** untuk ubah status pinjam.
-5. Tekan komik → masuk ke halaman **Detail/Edit**.
-6. Tekan ikon **X merah** untuk hapus (muncul konfirmasi terlebih dahulu).
-
----
-
-## Catatan Tambahan
-
-- Data komik disimpan secara lokal (belum tersambung ke backend).
-- Aplikasi dirancang dengan gaya sederhana dan user-friendly.
-- Dapat dikembangkan lebih lanjut dengan **Supabase** atau **Firebase** untuk penyimpanan cloud.
-
----
-
-### Pengembang
-
-**Nama:** I Kadek Mario Prayoga
-**NIM:** 2301020018
-**Mata Kuliah:** Pemrograman Mobile
-**Dosen Pengampu:** 
-IDA BAGUS KRESNA SUDIATMIKA
 
 - ```
