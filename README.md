@@ -1,50 +1,209 @@
-# Welcome to your Expo app 👋
+---
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+```markdown
+# 📘 Aplikasi Koleksi Komik Pribadi
 
-## Get started
+## 🧩 Deskripsi Singkat
 
-1. Install dependencies
+Aplikasi ini merupakan proyek **UTS Mata Kuliah Pemrograman Mobile**, dibangun menggunakan **Expo (React Native)** dan **Zustand** untuk manajemen state.  
+Tujuannya adalah memudahkan pengguna dalam **mencatat, mengelola, dan memantau koleksi komik pribadi**, termasuk status apakah komik sedang **dipinjam orang lain** atau **tersedia**.
 
-   ```bash
-   npm install
-   ```
+Aplikasi ini menyimpan data secara lokal menggunakan **AsyncStorage**, sehingga data tetap tersimpan meski aplikasi ditutup.
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## ⚙️ Fitur Utama
 
-In the output, you'll find options to open the app in a
+1. **Tambah Komik Baru**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   - Pengguna dapat menambahkan komik dengan data:
+     - Judul
+     - Deskripsi singkat
+     - Volume
+     - Status otomatis: “Tersedia”
+   - Form ditampilkan dalam modal sederhana agar proses cepat dan mudah.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+2. **Daftar Komik**
 
-## Get a fresh project
+   - Menampilkan semua komik dalam bentuk kartu (FlatList).
+   - Setiap item menampilkan: **Judul**, **Volume**, dan **Status**.
+   - Warna status membantu identifikasi cepat:
+     - Hijau → Tersedia
+     - Oranye → Dipinjam
 
-When you're ready, run:
+3. **Edit Komik (Halaman Detail)**
 
-```bash
-npm run reset-project
+   - Menampilkan detail komik yang dipilih.
+   - Dapat mengubah judul, deskripsi, volume, atau status.
+   - Tersedia tombol **Simpan Perubahan**.
+
+4. **Ubah Status**
+
+   - Tombol centang pada daftar komik digunakan untuk mengubah status:
+     - Jika belum dicentang → artinya _Dipinjam orang_.
+     - Jika dicentang → artinya _Sudah dikembalikan / Tersedia kembali_.
+
+5. **Hapus Komik**
+   - Menampilkan dialog konfirmasi sebelum menghapus data.
+   - Setelah dikonfirmasi, data akan dihapus dari daftar.
+
+---
+
+## 📱 Demo Aplikasi
+
+> Tambahkan screenshot atau rekaman layar di bawah ini untuk dokumentasi hasil akhir:
+>
+> - Tampilan daftar komik
+> - Tampilan form tambah komik
+> - Tampilan halaman detail/edit komik
+> - Dialog hapus data
+> - Ubah status komik
+
+Contoh struktur penempatan gambar:
+
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+![Home Screen](assets/screenshots/home.png)
+![Tambah Komik](assets/screenshots/add.png)
+![Detail Komik](assets/screenshots/detail.png)
+![Dialog Hapus](assets/screenshots/delete.png)
 
-## Learn more
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 🏗️ Struktur Folder Proyek
 
-## Join the community
+```
 
-Join our community of developers creating universal apps.
+shopping-list-app/
+├── app/
+│ ├── \_layout.tsx
+│ ├── index.tsx → Halaman utama (daftar komik)
+│ ├── add.tsx → Modal atau halaman tambah komik
+│ └── detail/
+│ └── [id].tsx → Halaman detail & edit komik
+├── store/
+│ └── useKomikStore.ts → Manajemen state dengan Zustand
+└── assets/ → (opsional) ikon, gambar, dsb.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```
+
+---
+
+## 📄 Penjelasan Tiap Halaman
+
+### 1️⃣ `HomeScreen` (`index.tsx`)
+
+**Fungsi:**
+
+- Menampilkan seluruh koleksi komik.
+- Memberikan akses untuk menambah, menghapus, dan ubah status komik.
+
+**Komponen penting:**
+
+- `FlatList` untuk menampilkan daftar komik.
+- `TouchableOpacity` untuk tombol **Tambah (+)** di pojok kanan bawah.
+- `Alert.alert()` untuk konfirmasi sebelum menghapus.
+
+**Screenshot Contoh:**
+
+> _Letakkan di sini screenshot daftar komik dengan tombol tambah di pojok kanan bawah._
+
+---
+
+### 2️⃣ `AddKomik` (`add.tsx` atau ModalForm)
+
+**Fungsi:**
+
+- Menambahkan komik baru ke daftar.
+- Input berisi: judul, deskripsi, volume.
+
+**Proses:**
+
+- Validasi: judul dan volume wajib diisi.
+- Data disimpan ke store Zustand dan AsyncStorage.
+
+**Screenshot Contoh:**
+
+> _Letakkan screenshot tampilan form tambah komik._
+
+---
+
+### 3️⃣ `DetailKomik` (`detail/[id].tsx`)
+
+**Fungsi:**
+
+- Menampilkan detail lengkap komik.
+- Menyediakan form edit untuk mengubah data (judul, volume, deskripsi, status).
+
+**Proses:**
+
+- Data diambil berdasarkan `id` dari URL.
+- Setelah diubah, data diperbarui di Zustand store.
+
+**Screenshot Contoh:**
+
+> _Letakkan screenshot tampilan halaman edit komik._
+
+---
+
+### 4️⃣ `useKomikStore.ts`
+
+**Fungsi:**
+
+- Menyimpan seluruh data komik dan mengelola fungsinya (CRUD).
+- Menggunakan **Zustand** agar manajemen state tetap ringan dan reaktif.
+
+**Method:**
+
+- `addKomik()` → Menambahkan data baru.
+- `removeKomik()` → Menghapus komik berdasarkan ID.
+- `toggleStatus()` → Mengubah status komik (Tersedia ↔ Dipinjam).
+- `updateKomik()` → Mengedit data komik tertentu.
+
+---
+
+## 🧠 Teknologi yang Digunakan
+
+| Teknologi                 | Fungsi                                      |
+| ------------------------- | ------------------------------------------- |
+| **Expo (React Native)**   | Framework utama aplikasi mobile             |
+| **TypeScript (TS & TSX)** | Menjamin type-safety dan struktur yang kuat |
+| **Zustand**               | State management sederhana dan efisien      |
+| **AsyncStorage**          | Penyimpanan data lokal                      |
+| **Expo Router**           | Navigasi berbasis file routing              |
+| **Ionicons**              | Ikon bawaan dari Expo                       |
+
+---
+
+## 🧪 Alur Penggunaan Aplikasi
+
+1. Buka aplikasi → halaman utama menampilkan daftar komik.
+2. Tekan tombol “+” untuk menambah komik baru.
+3. Setelah disimpan, komik akan muncul di daftar utama.
+4. Tekan ikon **radio/check** untuk ubah status pinjam.
+5. Tekan komik → masuk ke halaman **Detail/Edit**.
+6. Tekan ikon **X merah** untuk hapus (muncul konfirmasi terlebih dahulu).
+
+---
+
+## 💾 Catatan Tambahan
+
+- Data komik disimpan secara lokal (belum tersambung ke backend).
+- Aplikasi dirancang dengan gaya sederhana dan user-friendly.
+- Dapat dikembangkan lebih lanjut dengan **Supabase** atau **Firebase** untuk penyimpanan cloud.
+
+---
+
+### ✍️ Pengembang
+
+**Nama:** [Isi Nama Kamu]
+**NIM:** [Isi NIM Kamu]
+**Mata Kuliah:** Pemrograman Mobile
+**Dosen Pengampu:** [Isi Nama Dosen]
+
+```
+
+---
+```

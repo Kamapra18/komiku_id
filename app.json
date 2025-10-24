@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "canangku",
-    "slug": "canangku",
+    "name": "Komiku_id",
+    "slug": "Komiku_id",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "canangku",
+    "scheme": "komikuid",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
