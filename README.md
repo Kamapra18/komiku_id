@@ -113,6 +113,8 @@ komiku_id/
 
 ## Teknologi yang Digunakan
 
+---
+
 | Teknologi                 | Fungsi                                      |
 | ------------------------- | ------------------------------------------- |
 | **Expo (React Native)**   | Framework utama aplikasi mobile             |
@@ -122,5 +124,6 @@ komiku_id/
 | **Expo Router**           | Navigasi berbasis file routing              |
 | **Ionicons**              | Ikon bawaan dari Expo                       |
 
+---
 
 - ```
