@@ -1,129 +1,138 @@
-- ```markdown
 # Aplikasi Koleksi Komik Pribadi
 
 ### Pengembang
 
-**Nama:** I Kadek Mario Prayoga
-**NIM:** 2301020018
-**Mata Kuliah:** Pemrograman Mobile
-**Dosen Pengampu:** IDA BAGUS KRESNA SUDIATMIKA
-
-## Deskripsi Singkat
-
-Aplikasi ini merupakan proyek **UTS Mata Kuliah Pemrograman Mobile**, dibangun menggunakan **Expo (React Native)** dan **Zustand** untuk manajemen state.  
-Tujuannya adalah memudahkan pengguna dalam **mencatat, mengelola, dan memantau koleksi komik pribadi**, termasuk status apakah komik sedang **dipinjam orang lain** atau **tersedia**.
-
-Aplikasi ini menyimpan data secara lokal menggunakan **AsyncStorage**, sehingga data tetap tersimpan meski aplikasi ditutup.
+**Nama:** I Kadek Mario Prayoga  
+**NIM:** 2301020018  
+**Mata Kuliah:** Pemrograman Mobile  
+**Dosen Pengampu:** Ida Bagus Kresna Sudiatmika
 
 ---
 
-## Fitur Utama
+##  Deskripsi Singkat
 
-1. **Tambah Komik Baru**
+Aplikasi ini merupakan proyek **UTS Mata Kuliah Pemrograman Mobile**, dibangun menggunakan **Expo (React Native)** dan **Zustand** untuk manajemen state.  
+Tujuan utama aplikasi ini adalah membantu pengguna dalam **mencatat, mengelola, dan memantau koleksi komik pribadi**, termasuk status apakah komik sedang **dipinjam orang lain** atau **tersedia**.
 
-   - Pengguna dapat menambahkan komik dengan data:
-     - Judul
-     - Deskripsi
-     - Volume
-     - Penulis
-     - Genre
-     - Tipe Komik
-     - Status otomatis: **"Tersedia"**
-   - Form ditampilkan dalam modal sederhana agar proses cepat dan mudah.
-
-2. **Daftar Komik**
-
-   - Menampilkan semua komik dalam bentuk kartu (FlatList).
-   - Setiap item menampilkan: **Judul**, **Tipe**, dan **Status**.
-   - Warna status membantu identifikasi cepat:
-     - Hijau --> Tersedia
-     - kuning --> Edit 
-     - Oranye --> Dipinjam
-
-3. **Edit Komik (Halaman Detail)**
-
-   - Menampilkan detail komik yang dipilih.
-   - Dapat mengubah
-        - Judul
-        - Deskripsi
-        - Volume
-        - Penulis
-        - Genre
-        - Tipe Komik
-   - Tersedia tombol **Simpan Perubahan**.
-
-4. **Ubah Status**
-
-   - Tombol centang pada daftar komik digunakan untuk mengubah status:
-     - Jika belum dicentang → artinya _Dipinjam orang_.
-     - Jika dicentang → artinya _Sudah dikembalikan / Tersedia kembali_.
-
-5. **Hapus Komik**
-   - Menampilkan dialog konfirmasi sebelum menghapus data.
-   - Setelah dikonfirmasi, data akan dihapus dari daftar.
+Data disimpan secara lokal menggunakan **AsyncStorage**, sehingga **tetap tersimpan meskipun aplikasi ditutup**.
 
 ---
 
 ## Demo Aplikasi
 
-> - Tampilan daftar komik
+> - **Tampilan Daftar Komik**
+> - 
+>   <img width="421" height="906" alt="image" src="https://github.com/user-attachments/assets/502c6bbd-af6a-44c8-9952-6402a971f217" />
 
-<img width="492" height="1085" alt="image" src="https://github.com/user-attachments/assets/69c37760-f28c-4447-ad7b-8b2b034c9728" />
 
-> - Tampilan form tambah komik
+> - **Form Tambah Komik (Modal)**
+> - 
+>   <img width="392" height="681" alt="image" src="https://github.com/user-attachments/assets/e27aa921-3ecd-4d3e-80fa-68b5fbf25c52" />
 
-<img width="493" height="1069" alt="image" src="https://github.com/user-attachments/assets/47d47144-996c-435a-a022-41bbf9a6f4dc" />
 
-> - Tampilan form edit komik
+> - **Form Edit Komik**
+> - 
+> <img width="399" height="685" alt="image" src="https://github.com/user-attachments/assets/7475f83d-6adf-44b9-bc67-3878c59bc724" />
 
-<img width="486" height="1071" alt="image" src="https://github.com/user-attachments/assets/90f29dea-6b9e-41da-96ec-9fcde9a9afb7" />
 
-> - Dialog hapus data
+> - **Dialog Hapus Data**
+> - 
+>   <img width="397" height="196" alt="image" src="https://github.com/user-attachments/assets/6ddba501-163b-4ffb-8185-374d14768a79" />
 
-<img width="468" height="235" alt="image" src="https://github.com/user-attachments/assets/26f6630c-fb1d-4c22-81fe-bbe87f306955" />
 
-> - Tampilan Halaman Detail Komik
+> - **Halaman Detail Komik**
+> - 
+>   <img width="420" height="899" alt="image" src="https://github.com/user-attachments/assets/b7700e08-6284-49fc-8d99-761fb2b04fc1" />
 
-<img width="491" height="1080" alt="image" src="https://github.com/user-attachments/assets/22908da8-1669-4d6c-81b9-bf4a4c16d001" />
 
-> - Ubah status komik
+> - **Ubah ke DarkMode**
+> - 
+>   <img width="421" height="894" alt="image" src="https://github.com/user-attachments/assets/a2ad399a-a7c1-4230-b82b-c9abcb1c747f" />
 
-<img width="484" height="328" alt="image" src="https://github.com/user-attachments/assets/25a53a4e-90d8-4b6f-800b-8338e6714ac9" />
+
+> - **Halaman Pencarian Komik**
+> - 
+>   <img width="427" height="899" alt="image" src="https://github.com/user-attachments/assets/8677ce44-983c-428c-82e5-c80d7f48e162" />
+
+
+---
+##  Fitur Utama
+
+### 1. **Tambah & Edit Komik (Modal)**
+- Pengguna dapat menambahkan komik baru atau mengedit data komik yang sudah ada langsung melalui **modal interaktif**.  
+- Data yang diinput mencakup:
+  - Judul  
+  - Deskripsi  
+  - Volume  
+  - Penulis  
+  - Genre  
+  - Tipe Komik
+  - Url Gambar
+- Status komik secara otomatis diset menjadi **“Tersedia”** saat pertama kali ditambahkan.  
+- Modal yang sama digunakan untuk **tambah dan edit**, agar tampilan lebih ringkas.
 
 ---
 
-## Struktur Folder Proyek
-
-```
-
-komiku_id/
-├── app/
-│ ├── _layout.tsx
-│ ├── index.tsx → Halaman utama (daftar komik)
-│ ├── detail/
-│ │ ├── [id].tsx → Halaman detail komik
-│ │ └── _layout.tsx
-├── components/
-│ └── add.tsx → Modal tambah / edit komik
-├── store/
-│ └── useKomikStore.ts → Manajemen state (Zustand)
-├── assets/dsb.
+### 2. **Daftar Komik (Home)**
+- Menampilkan seluruh koleksi komik dalam bentuk **kartu (Card)** melalui komponen `FlatList`.  
+- Setiap item menampilkan:
+  - Judul komik
+  - Gambar
+  - Jenis/Tipe komik  
+  - Status pinjaman  
+- Warna status digunakan untuk memperjelas kondisi:
+  - 🟢 **Tersedia**
+  - 🟡 **Edit (mode ubah data)**
+  - 🟠 **Dipinjam**
 
 ---
 
-## Teknologi yang Digunakan
+### 3. **Ubah Status Komik**
+- Tersedia tombol **centang** pada setiap item untuk menandai status:
+  - ✅ Dicentang → _Tersedia / Sudah dikembalikan_
+  - ⭕ Tidak dicentang → _Sedang dipinjam_
+- Perubahan status langsung tersimpan di **AsyncStorage** tanpa perlu refresh.
 
 ---
 
-| Teknologi                 | Fungsi                                      |
-| ------------------------- | ------------------------------------------- |
-| **Expo (React Native)**   | Framework utama aplikasi mobile             |
-| **TypeScript (TS & TSX)** | Menjamin type-safety dan struktur yang kuat |
-| **Zustand**               | State management sederhana dan efisien      |
-| **AsyncStorage**          | Penyimpanan data lokal                      |
-| **Expo Router**           | Navigasi berbasis file routing              |
-| **Ionicons**              | Ikon bawaan dari Expo                       |
+### 4. **Hapus Komik**
+- Menyediakan dialog konfirmasi sebelum data dihapus.
+- Setelah dikonfirmasi, komik langsung dihapus dari daftar dan penyimpanan lokal.
 
 ---
 
-- ```
+### 5. **Detail Komik**
+- Halaman khusus untuk menampilkan **informasi lengkap** komik terpilih.
+- Dilengkapi tombol **Edit** untuk mengubah data melalui modal.
+- Tampilan bersih dan fokus pada isi komik.
+
+---
+
+### 6. **Pencarian Komik (Search Page)**
+- Fitur baru yang memungkinkan pengguna mencari komik berdasarkan **judul atau penulis**.  
+- Menggunakan **filter real-time** saat mengetik pada input pencarian.
+- Menampilkan hasil dalam format kartu seperti halaman utama.
+
+---
+
+## 🛠️ Teknologi yang Digunakan
+
+| Teknologi                 | Fungsi                                           |
+| -------------------------- | ------------------------------------------------ |
+| **Expo (React Native)**    | Framework utama untuk aplikasi mobile cross-platform |
+| **TypeScript (TS & TSX)**  | Menjamin type-safety dan struktur kode kuat     |
+| **Zustand**                | Manajemen state yang sederhana dan efisien      |
+| **AsyncStorage**           | Menyimpan data secara lokal di perangkat        |
+| **Expo Router**            | Navigasi berbasis struktur folder otomatis      |
+| **Ionicons**               | Menyediakan ikon tab dan tombol aksi            |
+
+---
+
+
+
+
+---
+
+> 📌 *Dikembangkan sebagai bagian dari tugas UTS Mata Kuliah Pemrograman Mobile.*
+
+
