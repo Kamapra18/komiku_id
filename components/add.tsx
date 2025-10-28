@@ -22,8 +22,9 @@ export default function AddKomikModal({
   onClose,
   editData,
 }: AddKomikModalProps) {
-  const { addKomik, updateKomik } = useKomikStore();
+  const { addKomik, updateKomik, theme } = useKomikStore();
 
+  // 🧱 State input
   const [judul, setJudul] = useState(editData?.judul || "");
   const [deskripsi, setDeskripsi] = useState(editData?.deskripsi || "");
   const [volume, setVolume] = useState(editData?.volume || "");
@@ -32,6 +33,7 @@ export default function AddKomikModal({
   const [typeKomik, setTypeKomik] = useState<TypeKomik>(
     editData?.type_komik || TypeKomik.GraphicNovel
   );
+  const [urlImage, setUrlImage] = useState(editData?.url_image || "");
 
   useEffect(() => {
     if (editData) {
@@ -41,6 +43,7 @@ export default function AddKomikModal({
       setPenulis(editData.penulis);
       setGenre(editData.genre);
       setTypeKomik(editData.type_komik);
+      setUrlImage(editData.url_image || "");
     } else {
       setJudul("");
       setDeskripsi("");
@@ -48,6 +51,7 @@ export default function AddKomikModal({
       setPenulis("");
       setGenre(Genre.Sejarah);
       setTypeKomik(TypeKomik.GraphicNovel);
+      setUrlImage("");
     }
   }, [editData]);
 
@@ -65,6 +69,7 @@ export default function AddKomikModal({
         penulis,
         genre,
         type_komik: typeKomik,
+        url_image: urlImage,
       });
     } else {
       addKomik({
@@ -74,10 +79,19 @@ export default function AddKomikModal({
         penulis,
         genre,
         type_komik: typeKomik,
-      });
+        url_image: urlImage,
+      } as any);
     }
 
     onClose();
+  };
+
+  const isDark = theme === "dark";
+  const themeStyle = {
+    backgroundColor: isDark ? "#1e1e1e" : "#fff",
+    textColor: isDark ? "#f1f1f1" : "#333",
+    borderColor: isDark ? "#555" : "#ccc",
+    modalBg: "rgba(0,0,0,0.4)",
   };
 
   return (
@@ -86,54 +100,119 @@ export default function AddKomikModal({
       animationType="slide"
       transparent={true}
       onRequestClose={onClose}>
-      <View style={styles.overlay}>
-        <View style={styles.modalContainer}>
-          <Text style={styles.title}>Tambah Komik</Text>
+      <View style={[styles.overlay, { backgroundColor: themeStyle.modalBg }]}>
+        <View
+          style={[
+            styles.modalContainer,
+            { backgroundColor: themeStyle.backgroundColor },
+          ]}>
+          <Text style={[styles.title, { color: themeStyle.textColor }]}>
+            {editData ? "Edit Komik" : "Tambah Komik"}
+          </Text>
 
-          <Text>Judul:</Text>
+          <Text style={{ color: themeStyle.textColor }}>Judul:</Text>
           <TextInput
             value={judul}
             onChangeText={setJudul}
-            style={styles.input}
+            style={[
+              styles.input,
+              {
+                color: themeStyle.textColor,
+                borderColor: themeStyle.borderColor,
+              },
+            ]}
+            placeholder="Masukkan judul komik"
+            placeholderTextColor={isDark ? "#888" : "#aaa"}
           />
 
-          <Text>Deskripsi:</Text>
+          <Text style={{ color: themeStyle.textColor }}>Deskripsi:</Text>
           <TextInput
             value={deskripsi}
             onChangeText={setDeskripsi}
-            style={styles.input}
+            style={[
+              styles.input,
+              {
+                color: themeStyle.textColor,
+                borderColor: themeStyle.borderColor,
+              },
+            ]}
+            placeholder="Masukkan deskripsi"
+            placeholderTextColor={isDark ? "#888" : "#aaa"}
           />
 
-          <Text>Volume:</Text>
+          <Text style={{ color: themeStyle.textColor }}>Volume:</Text>
           <TextInput
             value={volume}
             onChangeText={setVolume}
             keyboardType="numeric"
-            style={styles.input}
+            style={[
+              styles.input,
+              {
+                color: themeStyle.textColor,
+                borderColor: themeStyle.borderColor,
+              },
+            ]}
+            placeholder="Masukkan volume"
+            placeholderTextColor={isDark ? "#888" : "#aaa"}
           />
 
-          <Text>Penulis:</Text>
+          <Text style={{ color: themeStyle.textColor }}>Penulis:</Text>
           <TextInput
             value={penulis}
             onChangeText={setPenulis}
-            style={styles.input}
+            style={[
+              styles.input,
+              {
+                color: themeStyle.textColor,
+                borderColor: themeStyle.borderColor,
+              },
+            ]}
+            placeholder="Masukkan nama penulis"
+            placeholderTextColor={isDark ? "#888" : "#aaa"}
           />
 
-          <Text>Genre:</Text>
+          <Text style={{ color: themeStyle.textColor }}>URL Gambar:</Text>
+          <TextInput
+            value={urlImage}
+            onChangeText={setUrlImage}
+            style={[
+              styles.input,
+              {
+                color: themeStyle.textColor,
+                borderColor: themeStyle.borderColor,
+              },
+            ]}
+            placeholder="https://contoh.com/gambar.jpg"
+            placeholderTextColor={isDark ? "#888" : "#aaa"}
+          />
+
+          <Text style={{ color: themeStyle.textColor }}>Genre:</Text>
           <Picker
             selectedValue={genre}
             onValueChange={(val) => setGenre(val)}
-            style={styles.picker}>
+            style={[
+              styles.picker,
+              {
+                color: themeStyle.textColor,
+                backgroundColor: themeStyle.backgroundColor,
+              },
+            ]}>
             {Object.values(Genre).map((g) => (
               <Picker.Item key={g} label={g} value={g} />
             ))}
           </Picker>
 
-          <Text>Tipe Komik:</Text>
+          <Text style={{ color: themeStyle.textColor }}>Tipe Komik:</Text>
           <Picker
             selectedValue={typeKomik}
             onValueChange={(val) => setTypeKomik(val)}
-            style={styles.picker}>
+            style={[
+              styles.picker,
+              {
+                color: themeStyle.textColor,
+                backgroundColor: themeStyle.backgroundColor,
+              },
+            ]}>
             {Object.values(TypeKomik).map((t) => (
               <Picker.Item key={t} label={t} value={t} />
             ))}
@@ -163,20 +242,22 @@ export default function AddKomikModal({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
     justifyContent: "center",
     alignItems: "center",
   },
   modalContainer: {
     width: "90%",
-    backgroundColor: "white",
     borderRadius: 12,
     padding: 20,
   },
-  title: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
+  },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
     padding: 8,
     borderRadius: 6,
     marginBottom: 10,

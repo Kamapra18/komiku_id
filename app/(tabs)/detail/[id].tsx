@@ -1,38 +1,98 @@
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useKomikStore } from "../../../store/useKomikStore";
 
 export default function DetailKomik() {
   const { id } = useLocalSearchParams();
-  const router = useRouter();
-  const { komiks } = useKomikStore();
+  const { komiks, theme } = useKomikStore();
 
   const komik = komiks.find((k) => k.id === id);
 
+  // Tema dinamis
+  const currentTheme =
+    theme === "dark"
+      ? {
+          header: "#1e1e1e",
+          text: "#f1f1f1",
+          subtext: "#bbb",
+          background: "#121212",
+          card: "#1e1e1e",
+          accent: "#4dd0e1",
+        }
+      : {
+          header: "#149cac",
+          text: "#149cac",
+          subtext: "#555",
+          background: "#f9f9f9",
+          card: "#fff",
+          accent: "#149cac",
+        };
+
   if (!komik) {
     return (
-      <View style={styles.center}>
-        <Text style={styles.notFound}>Komik tidak ditemukan.</Text>
+      <View
+        style={[styles.center, { backgroundColor: currentTheme.background }]}>
+        <Text style={[styles.notFound, { color: currentTheme.text }]}>
+          Komik tidak ditemukan.
+        </Text>
       </View>
     );
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.infoCard}>
-        <Text style={styles.title}>{komik.judul}</Text>
-        <Text style={styles.value}>Deskripsi: {komik.deskripsi}</Text>
+    <ScrollView
+      contentContainerStyle={[
+        styles.container,
+        { backgroundColor: currentTheme.background },
+      ]}>
+      <View
+        style={[
+          styles.infoCard,
+          {
+            borderColor: currentTheme.accent,
+          },
+        ]}>
+        <Text style={[styles.title, { color: currentTheme.text }]}>
+          {komik.judul}
+        </Text>
 
-        <Text style={styles.value}>Volume: {komik.volume || "-"}</Text>
+        {komik.url_image && komik.url_image.trim() !== "" ? (
+          <Image
+            source={{ uri: komik.url_image }}
+            style={styles.image}
+            resizeMode="cover"
+            onError={(e) =>
+              console.log("Gagal memuat gambar:", e.nativeEvent.error)
+            }
+          />
+        ) : (
+          <View style={styles.imagePlaceholder}>
+            <Text style={{ color: currentTheme.subtext }}>
+              Gambar tidak tersedia
+            </Text>
+          </View>
+        )}
 
-        <Text style={styles.value}>Penulis: {komik.penulis || "-"}</Text>
+        <Text style={[styles.value, { color: currentTheme.subtext }]}>
+          Deskripsi: {komik.deskripsi}
+        </Text>
+        <Text style={[styles.value, { color: currentTheme.subtext }]}>
+          Volume: {komik.volume || "-"}
+        </Text>
+        <Text style={[styles.value, { color: currentTheme.subtext }]}>
+          Penulis: {komik.penulis || "-"}
+        </Text>
+        <Text style={[styles.value, { color: currentTheme.subtext }]}>
+          Genre: {komik.genre || "-"}
+        </Text>
+        <Text style={[styles.value, { color: currentTheme.subtext }]}>
+          Tipe Komik: {komik.type_komik}
+        </Text>
 
-        <Text style={styles.value}>Genre: {komik.genre || "-"}</Text>
-
-        <Text style={styles.value}>Tipe Komik: {komik.type_komik}</Text>
-
-        <Text style={styles.label}>Status:</Text>
+        <Text style={[styles.label, { color: currentTheme.text }]}>
+          Status:
+        </Text>
         <Text
           style={[
             styles.value,
@@ -52,16 +112,13 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    flex: 1,
-    padding: 20,
-    backgroundColor: "#f9f9f9",
     flexGrow: 1,
+    padding: 20,
   },
   center: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f9f9f9",
   },
   notFound: {
     fontSize: 16,
@@ -70,40 +127,38 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#149cac",
     marginBottom: 16,
     textAlign: "center",
   },
   infoCard: {
-    flex: 1,
-    textAlign: "center",
+    width: "100%",
+    padding: 16,
     alignItems: "center",
     justifyContent: "center",
-    padding: 16,
   },
   label: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "#333",
     marginTop: 10,
   },
   value: {
     fontSize: 15,
-    color: "#555",
+    marginBottom: 4,
   },
-  backButton: {
-    flexDirection: "row",
+  image: {
+    width: "100%",
+    height: 600,
+    borderRadius: 10,
+    marginBottom: 15,
+    backgroundColor: "#eee",
+  },
+  imagePlaceholder: {
+    width: "100%",
+    height: 220,
+    borderRadius: 10,
+    backgroundColor: "#ddd",
+    justifyContent: "center",
     alignItems: "center",
-    alignSelf: "flex-start",
-    backgroundColor: "#149cac",
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 8,
-    marginBottom: 10,
-  },
-  backText: {
-    color: "#fff",
-    marginLeft: 6,
-    fontWeight: "bold",
+    marginBottom: 15,
   },
 });

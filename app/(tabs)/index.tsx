@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import {
   Alert,
   FlatList,
+  Image,
   Pressable,
   StyleSheet,
   Text,
@@ -15,10 +16,27 @@ import { useKomikStore } from "../../store/useKomikStore";
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { komiks, toggleStatus, removeKomik } = useKomikStore();
+  const { komiks, toggleStatus, removeKomik, theme } = useKomikStore();
 
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedKomik, setSelectedKomik] = useState<any | null>(null);
+
+  const currentTheme =
+    theme === "dark"
+      ? {
+          background: "#121212",
+          card: "#1e1e1e",
+          text: "#f1f1f1",
+          title: "#4dd0e1",
+          border: "#333",
+        }
+      : {
+          background: "#f9f9f9",
+          card: "#fff",
+          text: "#333",
+          title: "#149cac",
+          border: "#ddd",
+        };
 
   const handleDelete = (id: string, judul: string) => {
     Alert.alert(
@@ -46,21 +64,35 @@ export default function HomeScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Koleksi Komik</Text>
-
+    <View
+      style={[styles.container, { backgroundColor: currentTheme.background }]}>
+      <Text style={[styles.title, { color: currentTheme.title }]}>
+        Koleksi Komik
+      </Text>
       <FlatList
         data={komiks}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Pressable
-            style={styles.card}
-            onPress={() => router.push(`/detail/${item.id}`)} // 👈 navigasi ke halaman detail
-          >
+            style={[
+              styles.card,
+              {
+                backgroundColor: currentTheme.card,
+                borderColor: currentTheme.border,
+              },
+            ]}
+            onPress={() => router.push(`/detail/${item.id}`)}>
+            <View style={styles.imageWrapper}>
+              <Image source={{ uri: item.url_image }} style={styles.image} />
+            </View>
             <View style={{ flex: 1 }}>
-              <Text style={styles.name}>{item.judul}</Text>
-              <Text style={styles.info}>Tipe: {item.type_komik}</Text>
-              <Text style={styles.status}>
+              <Text style={[styles.name, { color: currentTheme.title }]}>
+                {item.judul}
+              </Text>
+              <Text style={(styles.info, { color: currentTheme.text })}>
+                Tipe: {item.type_komik}
+              </Text>
+              <Text style={[styles.status, { color: currentTheme.text }]}>
                 Status:{" "}
                 <Text
                   style={{
@@ -92,7 +124,9 @@ export default function HomeScreen() {
           </Pressable>
         )}
         ListEmptyComponent={
-          <Text style={styles.empty}>Belum ada komik ditambahkan</Text>
+          <Text style={[styles.empty, { color: currentTheme.text }]}>
+            Belum ada komik ditambahkan
+          </Text>
         }
       />
 
@@ -163,5 +197,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 4,
+  },
+  imageWrapper: {
+    width: 60,
+    height: 60,
+    borderRadius: 8,
+    overflow: "hidden",
+    marginRight: 12,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
 });

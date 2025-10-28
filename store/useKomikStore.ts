@@ -23,6 +23,7 @@ export enum TypeKomik {
   KomikAdaptasi = "Komik Adaptasi",
   KomikLokal = "Komik Lokal",
 }
+
 export interface Komik {
   id: string;
   judul: string;
@@ -31,11 +32,14 @@ export interface Komik {
   penulis: string;
   genre: Genre;
   type_komik: TypeKomik;
+  url_image?: string;
   status: "Tersedia" | "Dipinjam";
 }
 
 interface KomikStore {
   komiks: Komik[];
+  theme: "light" | "dark";
+  toggleTheme: () => void;
   addKomik: (komik: Omit<Komik, "id" | "status">) => void;
   removeKomik: (id: string) => void;
   toggleStatus: (id: string) => void;
@@ -46,6 +50,12 @@ export const useKomikStore = create<KomikStore>()(
   persist(
     (set) => ({
       komiks: [],
+      theme: "light",
+
+      toggleTheme: () =>
+        set((state) => ({
+          theme: state.theme === "light" ? "dark" : "light",
+        })),
 
       addKomik: (komik) =>
         set((state) => ({
