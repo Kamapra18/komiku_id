@@ -6,7 +6,7 @@
 **NIM:** 2301020018  
 **Mata Kuliah:** Pemrograman Mobile  
 **Dosen Pengampu:** Ida Bagus Kresna Sudiatmika
-**Link Loom**: https://www.loom.com/share/0b153ac0732a41bfb35ed2ce1f031a73
+**Link Loom:** https://www.loom.com/share/0b153ac0732a41bfb35ed2ce1f031a73
 
 ---
 
