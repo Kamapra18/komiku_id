@@ -1,14 +1,17 @@
-import { Picker } from "@react-native-picker/picker";
+import * as ImagePicker from "expo-image-picker";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
+  Image,
   Modal,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import DropDownPicker from "react-native-dropdown-picker";
 import { Genre, TypeKomik, useKomikStore } from "../store/useKomikStore";
 
 interface AddKomikModalProps {
@@ -24,16 +27,28 @@ export default function AddKomikModal({
 }: AddKomikModalProps) {
   const { addKomik, updateKomik, theme } = useKomikStore();
 
-  // 🧱 State input
   const [judul, setJudul] = useState(editData?.judul || "");
   const [deskripsi, setDeskripsi] = useState(editData?.deskripsi || "");
   const [volume, setVolume] = useState(editData?.volume || "");
   const [penulis, setPenulis] = useState(editData?.penulis || "");
-  const [genre, setGenre] = useState<Genre>(editData?.genre || Genre.Sejarah);
-  const [typeKomik, setTypeKomik] = useState<TypeKomik>(
+  const [urlImage, setUrlImage] = useState(editData?.url_image || "");
+
+  // Dropdown states
+  const [openGenre, setOpenGenre] = useState(false);
+  const [openType, setOpenType] = useState(false);
+  const [genre, setGenre] = useState(editData?.genre || Genre.Sejarah);
+  const [typeKomik, setTypeKomik] = useState(
     editData?.type_komik || TypeKomik.GraphicNovel
   );
-  const [urlImage, setUrlImage] = useState(editData?.url_image || "");
+
+  const genreItems = Object.values(Genre).map((g) => ({
+    label: g,
+    value: g,
+  }));
+  const typeItems = Object.values(TypeKomik).map((t) => ({
+    label: t,
+    value: t,
+  }));
 
   useEffect(() => {
     if (editData) {
@@ -54,6 +69,28 @@ export default function AddKomikModal({
       setUrlImage("");
     }
   }, [editData]);
+
+  // ✅ Fungsi pilih gambar dari galeri
+  const pickImage = async () => {
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      Alert.alert(
+        "Izin diperlukan",
+        "Aktifkan izin akses galeri terlebih dahulu."
+      );
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setUrlImage(result.assets[0].uri); // simpan URI lokal
+    }
+  };
 
   const handleSave = () => {
     if (!judul.trim() || !volume.trim()) {
@@ -98,11 +135,11 @@ export default function AddKomikModal({
     <Modal
       visible={visible}
       animationType="slide"
-      transparent={true}
+      transparent
       onRequestClose={onClose}>
       <View style={[styles.overlay, { backgroundColor: themeStyle.modalBg }]}>
-        <View
-          style={[
+        <ScrollView
+          contentContainerStyle={[
             styles.modalContainer,
             { backgroundColor: themeStyle.backgroundColor },
           ]}>
@@ -110,6 +147,7 @@ export default function AddKomikModal({
             {editData ? "Edit Komik" : "Tambah Komik"}
           </Text>
 
+          {/* Input fields */}
           <Text style={{ color: themeStyle.textColor }}>Judul:</Text>
           <TextInput
             value={judul}
@@ -171,53 +209,74 @@ export default function AddKomikModal({
             placeholderTextColor={isDark ? "#888" : "#aaa"}
           />
 
-          <Text style={{ color: themeStyle.textColor }}>URL Gambar:</Text>
-          <TextInput
-            value={urlImage}
-            onChangeText={setUrlImage}
-            style={[
-              styles.input,
-              {
-                color: themeStyle.textColor,
-                borderColor: themeStyle.borderColor,
-              },
-            ]}
-            placeholder="https://contoh.com/gambar.jpg"
-            placeholderTextColor={isDark ? "#888" : "#aaa"}
+          {/* Ganti input URL → tombol pilih gambar */}
+          <Text style={{ color: themeStyle.textColor }}>Gambar Komik:</Text>
+          <TouchableOpacity style={styles.imageBtn} onPress={pickImage}>
+            <Text style={styles.imageBtnText}>Pilih Gambar</Text>
+          </TouchableOpacity>
+
+          {urlImage ? (
+            <Image
+              source={{ uri: urlImage }}
+              style={{
+                width: "100%",
+                height: 200,
+                borderRadius: 10,
+                marginTop: 10,
+              }}
+              resizeMode="cover"
+            />
+          ) : (
+            <Text style={{ color: themeStyle.textColor, marginBottom: 10 }}>
+              Belum ada gambar dipilih
+            </Text>
+          )}
+
+          {/* Genre Dropdown */}
+          <Text style={{ color: themeStyle.textColor }}>Genre:</Text>
+          <DropDownPicker
+            open={openGenre}
+            value={genre}
+            items={genreItems}
+            setOpen={setOpenGenre}
+            setValue={setGenre}
+            setItems={() => {}}
+            placeholder="Pilih genre"
+            style={{
+              backgroundColor: themeStyle.backgroundColor,
+              borderColor: themeStyle.borderColor,
+              marginBottom: 10,
+            }}
+            textStyle={{ color: themeStyle.textColor }}
+            dropDownContainerStyle={{
+              backgroundColor: themeStyle.backgroundColor,
+              borderColor: themeStyle.borderColor,
+            }}
           />
 
-          <Text style={{ color: themeStyle.textColor }}>Genre:</Text>
-          <Picker
-            selectedValue={genre}
-            onValueChange={(val) => setGenre(val)}
-            style={[
-              styles.picker,
-              {
-                color: themeStyle.textColor,
-                backgroundColor: themeStyle.backgroundColor,
-              },
-            ]}>
-            {Object.values(Genre).map((g) => (
-              <Picker.Item key={g} label={g} value={g} />
-            ))}
-          </Picker>
-
+          {/* Type Komik Dropdown */}
           <Text style={{ color: themeStyle.textColor }}>Tipe Komik:</Text>
-          <Picker
-            selectedValue={typeKomik}
-            onValueChange={(val) => setTypeKomik(val)}
-            style={[
-              styles.picker,
-              {
-                color: themeStyle.textColor,
-                backgroundColor: themeStyle.backgroundColor,
-              },
-            ]}>
-            {Object.values(TypeKomik).map((t) => (
-              <Picker.Item key={t} label={t} value={t} />
-            ))}
-          </Picker>
+          <DropDownPicker
+            open={openType}
+            value={typeKomik}
+            items={typeItems}
+            setOpen={setOpenType}
+            setValue={setTypeKomik}
+            setItems={() => {}}
+            placeholder="Pilih tipe komik"
+            style={{
+              backgroundColor: themeStyle.backgroundColor,
+              borderColor: themeStyle.borderColor,
+              marginBottom: 10,
+            }}
+            textStyle={{ color: themeStyle.textColor }}
+            dropDownContainerStyle={{
+              backgroundColor: themeStyle.backgroundColor,
+              borderColor: themeStyle.borderColor,
+            }}
+          />
 
+          {/* Buttons */}
           <View style={styles.btnRow}>
             <TouchableOpacity
               style={[styles.btn, styles.cancel]}
@@ -233,7 +292,7 @@ export default function AddKomikModal({
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </ScrollView>
       </View>
     </Modal>
   );
@@ -262,8 +321,15 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginBottom: 10,
   },
-  picker: {
-    marginBottom: 10,
+  imageBtn: {
+    backgroundColor: "#007AFF",
+    padding: 10,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  imageBtnText: {
+    color: "white",
+    fontWeight: "bold",
   },
   btnRow: {
     flexDirection: "row",
